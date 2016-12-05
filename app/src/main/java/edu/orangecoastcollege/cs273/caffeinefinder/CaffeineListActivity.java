@@ -1,7 +1,10 @@
 package edu.orangecoastcollege.cs273.caffeinefinder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -59,7 +62,19 @@ public class CaffeineListActivity extends AppCompatActivity implements OnMapRead
         CameraPosition cameraPosition = new CameraPosition.Builder().target(currentPosition).zoom(14).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         mMap.moveCamera(cameraUpdate);
+    }
 
+    public void viewLocationDetails(View view)
+    {
+        if(view instanceof LinearLayout)
+        {
+            LinearLayout selectedLinearLayout = (LinearLayout) view;
+            Location selectedLocation = (Location) selectedLinearLayout.getTag();
 
+            Intent detailsIntent = new Intent(this, CaffeineDetailsActivity.class);
+            detailsIntent.putExtra("selectedCaffeineLocation", selectedLocation);
+
+            startActivity(detailsIntent);
+        }
     }
 }
